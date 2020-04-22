@@ -26,10 +26,10 @@ class RegisterController extends Controller
 
     /**
      * Where to redirect users after registration.
-     *
+     * $redirectTo は登録に成功した後のリダイレクト先
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -50,9 +50,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ], [], [
+            'name' => 'ユーザー名',
+            'email' => 'メールアドレス',
+            'password' => 'パスワード',
         ]);
     }
 
